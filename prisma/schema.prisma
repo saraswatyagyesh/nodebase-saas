@@ -4,6 +4,8 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// COMMAND to connect to database :> npx neonctl@latest init
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -12,3 +14,21 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// USER Model :> Relation to many posts
+model User { 
+  id    Int     @id @default(autoincrement()) 
+  email String  @unique
+  name  String?
+  posts Post[]
+} 
+
+// POST Model :> Relation to one user (author)
+model Post { 
+  id        Int     @id @default(autoincrement()) 
+  title     String
+  content   String?
+  published Boolean @default(false) 
+  author    User    @relation(fields: [authorId], references: [id]) 
+  authorId  Int
+} 
