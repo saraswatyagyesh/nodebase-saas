@@ -22,7 +22,6 @@ model User {
   name  String?
   posts Post[]
 } 
-
 // POST Model :> Relation to one user (author)
 model Post { 
   id        Int     @id @default(autoincrement()) 
